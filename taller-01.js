@@ -4,7 +4,7 @@ function convertidorTemp(tempCelsius) {
 
 function resolvedor(a, b, c, signo) {
   // signo es +1 para positivo o -1 para negativo
-	return (-b + signo*(b**2 - 4*a*c)**0.5)/(2*a)
+  return (-b + signo*(b**2 - 4*a*c)**0.5)/(2*a)
 }
 
 function mejorParidad(num) {
@@ -12,11 +12,11 @@ function mejorParidad(num) {
 }
 
 function peorParidad(n) {
-	asdfghjkl = String(n)
-	if (parseInt(asdfghjkl) == Math.sin(Math.PI) - Math.sin(Math.PI)) {
-		return true
-	}
-	if (parseInt(asdfghjkl) == (Math.sqrt(4) / Math.sqrt(4)) ** (Math.log2(2) - Math.log2(1))) {
+  asdfghjkl = String(n)
+  if (parseInt(asdfghjkl) == Math.sin(Math.PI) - Math.sin(Math.PI)) {
+    return true
+  }
+  if (parseInt(asdfghjkl) == (Math.sqrt(4) / Math.sqrt(4)) ** (Math.log2(2) - Math.log2(1))) {
     return false
   }
   if (parseInt(asdfghjkl) == Math.sqrt(9) - Math.sqrt(4) + 1) {
