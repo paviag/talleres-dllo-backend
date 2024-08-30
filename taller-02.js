@@ -26,7 +26,7 @@ function sum(array) {
 }
 
 function missingNumbers(array) {
-  array.sort()
+  array.sort((a, b) => a - b)
   let missingNumbers = []
   let n = array[0]+1
   for (let i = 1; i < array.length; i++) {
