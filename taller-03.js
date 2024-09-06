@@ -1,9 +1,9 @@
 function filterVocales(letra) {
-    return ["a", "e", "i", "o", "u", "á", "é", "í", "ó", "ú"].includes(letra)
+    return ["a", "e", "i", "o", "u"].includes(letra)
 }
 
 function desglosarString(st, opc) {
-    let starr = st.split("")
+    let starr = st.toLowerCase().split("")
     if (opc == "vocales") {
         return starr.filter(filterVocales).length
     } else if (opc == "consonantes") {
@@ -15,7 +15,7 @@ function twoSum(arr, num) {
     // returns -1 in case of finding none
     for (let i = 0; i < arr.length; i++) {
         let ind = arr.findIndex((x) => {return x == num - arr[i]})
-        if (ind != -1) {
+        if (ind != -1 & ind != i) {
             return [i, ind]
         }
     }
