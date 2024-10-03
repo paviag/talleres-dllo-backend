@@ -25,8 +25,6 @@ async function checkUserExists(userId: number): Promise<boolean> {
 
 async function getTotalTeamExperience(teamName: string): Promise<number> {
   const teamUsers = await filterUsersByFieldAction("team", teamName);
-  console.log(teamUsers);
-  console.log(teamUsers.map(u => u.years).join("+"));
   const total = teamUsers.map(u => u.years).reduce((a, b) => a + b);
 
   return total;
