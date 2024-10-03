@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // ROUTES
-const SERVER_VERSION = "/";//"/api/v1/";
+const SERVER_VERSION = "/";
 
 app.use(SERVER_VERSION + "users", userRoutes);
 
