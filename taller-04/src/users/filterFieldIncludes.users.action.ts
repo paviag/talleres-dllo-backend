@@ -8,7 +8,7 @@ async function filterUsersByFieldIncludesAction(field: string, value: string): P
     } catch (e) {
       return 0;
     }
-  }); // await UserModel.find({ [field]: value });
+  });
 
   return results;
 }
