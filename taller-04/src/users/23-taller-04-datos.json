@@ -132,26 +132,5 @@
     "years": 10,
     "team": "axvedw",
     "faction": "Rebels"
-  },
-  {
-    "id": 5,
-    "name": "gab1",
-    "hobbies": [
-      "swimming",
-      "drums"
-    ],
-    "years": 3,
-    "team": "axvedw",
-    "faction": "Rebels"
-  },
-  {
-    "id": 5,
-    "name": "gab5",
-    "hobbies": [
-      "drums"
-    ],
-    "years": 34,
-    "team": "axvedw",
-    "faction": "Rebels"
   }
 ]
