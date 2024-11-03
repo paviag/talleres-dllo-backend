@@ -4,7 +4,7 @@ import { UserModel, UserType } from "./user.model";
 
 // DECLARE ACTION FUNCTION
 async function loginUserAction(email: string, password: string): Promise<string> {
-    const user = await UserModel.find({ "email": email });
+    const user = await UserModel.findOne({ "email": email }) as UserType;
     if (user) {
         console.log("logging in:");
         console.log("user passw:"+user.password);

@@ -19,24 +19,15 @@ async function CreateUser(request: Request<CreateUserType>, response: Response) 
 
     } catch (error) {
         response.status(500).json({
-            message: "Failure",
+            message: "Failure.",
             information: (error as any).toString()
         })
     }
 }
 
-async function GetOneUser(request: Request<{user: UserType}>, response: Response) {
-  const users = await readUsers(request.body);
-
-  response.status(200).json({
-    message: "Success.",
-    users: users,
-  });
-}
-
 async function LoginUser(request: Request<LoginUserType>, response: Response) {
     const { email, password } = request.body;
-    console.log(`mail ${email} passwo ${password}`)
+    console.log(`mail ${email} password ${password}`)
     
     try {
         const token = await loginUser(email, password);
@@ -66,8 +57,8 @@ async function DisableUser(request: Request, response: Response) {
 //userRoutes.get("/login", UserLoginAuthMiddleware, GetOneUser);        // READ
 userRoutes.get("/login", LoginUser);        // READ
 userRoutes.post("/create", CreateUser);                               // CREATE
-userRoutes.post("/update", UserModAuthMiddleware, UpdateUser);        // UPDATE
-userRoutes.post("/delete", UserDisableAuthMiddleware, DisableUser);   // DELETE
+userRoutes.patch("/update", UserModAuthMiddleware, UpdateUser);        // UPDATE
+userRoutes.put("/delete", UserDisableAuthMiddleware, DisableUser);   // DELETE
 
 // EXPORT ROUTES
 export default userRoutes;
