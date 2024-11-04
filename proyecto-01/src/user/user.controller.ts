@@ -1,11 +1,13 @@
 import createUserAction from "./create.user.action";
-import readUsersAction from "./read.user.action";
+import readUserAction from "./read.user.action";
 import updateUserAction from "./update.user.action";
 import disableUserAction from "./disable.user.action";
 import jwt from 'jsonwebtoken';
 import * as argon2 from "argon2";
 import { UserType } from "./user.model";
 import { CreateUserType, UpdateUserType } from "./user.types";
+import { ReservationType } from "../reservation/reservation.model";
+import readReservationsAction from "../reservation/read.reservations.action";
 
 // DECLARE CONTROLLER FUNCTIONS
 async function createUser(userData: CreateUserType): Promise<UserType> {
@@ -13,17 +15,23 @@ async function createUser(userData: CreateUserType): Promise<UserType> {
     return createdUser;
 }
 
-async function loginUser(email: string, password: string): Promise<string> {
-    const user = await readUsersAction({email: email});
+async function loginUser(email: string, password: string): Promise<{token: string, user: UserType, reservationHistory: ReservationType[]}> {
+    const user = await readUserAction({email: email});
 
     if (user) {
-        if (await argon2.verify(user[0].password, password)) {
+        if (await argon2.verify(user.password, password)) {
             const token = jwt.sign(
-                { _id: user[0]._id, permissions: user[0].permissions },
+                { _id: user._id, permissions: user.permissions },
                 process.env.JWT_SECRET as string,
                 { expiresIn: '1h' }
             );
-            return token;
+            const reservationHistory = await readReservationsAction({userId: user._id});
+
+            return {
+                token: token,
+                user: user,
+                reservationHistory: reservationHistory,
+            };
         } else {
             throw new Error('Invalid email or password.');
         }

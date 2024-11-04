@@ -1,11 +1,11 @@
-import userRoutes from "./user/v1/user.routes";
-import bookRoutes from "./book/v1/book.routes";
+import userRoutes from "./user/user.routes";
+import bookRoutes from "./book/book.routes";
 import express from "express";
 import { Request, Response } from "express";
 import cors from "cors";
 
 // ROUTES
-const SERVER_VERSION = "/api/v1/";
+const SERVER_VERSION = "/api/";
 
 // FALLBACKS
 function routeNotFound(request: Request, response: Response) {

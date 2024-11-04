@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { createUser, loginUser, updateUser, disableUser } from "./user.controller";
 import { CreateUserType, UpdateUserType, LoginUserType } from "./user.types";
-import { UserModAuthMiddleware, UserDisableAuthMiddleware } from "../../middleware/auth";
+import { UserModAuthMiddleware, UserDisableAuthMiddleware } from "../middleware/auth";
 
 // INIT ROUTES
 const userRoutes = Router();
@@ -29,10 +29,10 @@ async function LoginUser(request: Request<LoginUserType>, response: Response) {
     const { email, password } = request.body;
     
     try {
-        const token = await loginUser(email, password);
+        const results = await loginUser(email, password);
         response.status(230).json({ 
             message: "Login successful.",
-            token: token,
+            ...results,
         });
     } catch (error) {
         response.status(401).json({ 

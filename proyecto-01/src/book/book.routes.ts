@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import { createBook, updateBook, disableBook, readBooks, reserveBook } from "./book.controller";
+import { createBook, updateBook, disableBook, readBooks, reserveBook, returnBook, readOneBook } from "./book.controller";
 import { BookQueryType, CreateBookType, UpdateBookType, ReserveBookType } from "./book.types";
-import { BookCreateAuthMiddleware, BookModAuthMiddleware, BookDisableAuthMiddleware } from "../../middleware/auth";
+import { BookCreateAuthMiddleware, BookModAuthMiddleware, BookDisableAuthMiddleware } from "../middleware/auth";
 
 // INIT ROUTES
 const bookRoutes = Router();
@@ -26,10 +26,16 @@ async function CreateBook(request: Request<any, any, CreateBookType>, response: 
 
 async function SearchBooks(request: Request<any, any, any, BookQueryType>, response: Response) {
     try {
-        const books = await readBooks(request.query);
+        let results;
+        if (request.query._id) {
+            results = await readOneBook(request.query._id);
+        } else {
+            results = await readBooks(request.query);
+        }
+        
         response.status(230).json({ 
             message: "Query results.",
-            books: books,
+            results: results,
         });
     } catch (error) {
         response.status(401).json({ 
@@ -40,22 +46,28 @@ async function SearchBooks(request: Request<any, any, any, BookQueryType>, respo
 
 async function UpdateBook(request: Request<{bookId: string}, UpdateBookType | ReserveBookType>, response: Response) {
     // update info is in request.body, target book id is in params
-    // TODO reservas
+    // to make reservation, body should be: { reserved: true }
+    // to wrap up reservation/return book, body should be: { reserved: false }
     
     try {
-        let updatedBook;
+        let results;
         if (request.body.reserved == undefined) {
-            updatedBook = await updateBook(request.params.bookId, request.body);
+            results = await updateBook(request.params.bookId, request.body);
         } else {
             if (Object.keys(request.body).length > 2) {
+                // request cannot attempt to both update a reservation and update book info
                 throw new Error("Invalid update request.")
             }
-            updatedBook = await reserveBook(request.params.bookId, request.body._id);
+            if (request.body.reserved) {
+                results = await reserveBook(request.params.bookId, request.body._id);
+            } else {
+                results = await returnBook(request.params.bookId, request.body._id);
+            }
         }
 
         response.status(200).json({
             message: "Success.",
-            updatedBook: updatedBook,
+            results: results,
         });
     } catch (error) {
         response.status(500).json({

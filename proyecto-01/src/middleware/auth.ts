@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { HeaderUserType } from "../user/v1/user.types";
-import checkEnabledUserAction from "../user/v1/checkEnabled.user.action";
+import { HeaderUserType } from "../user/user.types";
+import checkEnabledUserAction from "../user/checkEnabled.user.action";
 import { decode } from "jsonwebtoken";
 
 function decodeJwtValues(request: Request) {
