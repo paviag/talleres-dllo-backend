@@ -1,23 +1,15 @@
 import { model, Schema } from "mongoose";
 
 // DECLARE MODEL TYPE
-type HistoryType = {
-    name: string;
-    identifier: string;
-    reservationDate: Date;
-    deliveryDate: Date;
-}
-
 type BookType = {
-    _id: string;
-    name: string;
-    author: string;
-    pubDate: Date;
-    genre: string;
-    publisher: string;
-    availableUnits: number;
-    disabled: boolean;
-    history: HistoryType[];
+    _id: string,
+    name: string,
+    author: string,
+    pubDate: Date,
+    genre: string,
+    publisher: string,
+    reserved: boolean,
+    disabled: boolean,
 };
 
 const BookSchema = new Schema<BookType>({
@@ -41,18 +33,14 @@ const BookSchema = new Schema<BookType>({
         type: String,
         required: true,
     },
-    availableUnits: {
-        type: Number,
-        default: 1,
+    reserved: {
+        type: Boolean,
+        default: false,
     },
     disabled: {
         type: Boolean,
         default: false,
     },
-    history: {
-        type: Array<HistoryType>,
-        default: [],
-    }
 },{
     timestamps: true,
     versionKey: false,
@@ -62,4 +50,4 @@ const BookSchema = new Schema<BookType>({
 const BookModel = model<BookType>("Book", BookSchema);
 
 // EXPORT ALL
-export { BookModel, BookSchema, BookType, HistoryType };
+export { BookModel, BookSchema, BookType };
