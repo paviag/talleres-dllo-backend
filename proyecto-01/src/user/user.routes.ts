@@ -40,6 +40,7 @@ async function LoginUser(request: Request<LoginUserType>, response: Response) {
         });
     }
 }
+
 async function UpdateUser(request: Request<{userId: string}, UpdateUserType>, response: Response) {
     // update info is in request.body, target user id is in params
     try {

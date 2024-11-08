@@ -13,6 +13,9 @@ import readReservationsAction from "../reservation/read.reservations.action";
 // DECLARE CONTROLLER FUNCTIONS
 async function readBooks(query: BookQueryType): Promise<BookType[] | BookType> {
     query = {...query, disabled: false};
+    if (query.pubDate) {
+        query.pubDate = new Date(query.pubDate).toISOString();
+    }
     const books = await readBooksAction(query);
 
     return books;

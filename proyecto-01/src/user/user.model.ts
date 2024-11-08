@@ -1,13 +1,6 @@
 import { model, Schema } from "mongoose";
 
 // DECLARE MODEL TYPE
-/*type HistoryType = {
-    name: string;
-    identifier: string;
-    reservationDate: Date;
-    deliveryDate: Date;
-}*/
-
 type PermissionsType = {
     [key: string]: boolean;
     "UPDATE-USERS": boolean;
